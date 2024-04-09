@@ -2,17 +2,26 @@ defmodule FormExample.Orders.Order do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias FormExample.Businesses.Business
+
+  @valid_statutes [:draft, :paid, :refunded]
+
   schema "orders" do
-    field :status, Ecto.Enum, values: [:draft, :paid, :refunded]
-    field :business, :id
+    field :amount, :integer
+    field :status, Ecto.Enum, values: @valid_statutes
+
+    belongs_to :business, Business
 
     timestamps(type: :utc_datetime)
   end
 
+  def valid_statutes, do: @valid_statutes
+
   @doc false
   def changeset(order, attrs) do
     order
-    |> cast(attrs, [:status])
-    |> validate_required([:status])
+    |> cast(attrs, [:amount, :status])
+    |> validate_required([:amount, :status])
+    |> validate_number(:amount, greater_than: 0)
   end
 end

@@ -17,7 +17,8 @@ defmodule FormExampleWeb.Router do
   scope "/", FormExampleWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", HomeLive, :new
+    live "/:business_id", HomeLive, :edit
   end
 
   # Other scopes may use custom stacks.

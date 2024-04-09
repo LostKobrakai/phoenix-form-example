@@ -10,9 +10,7 @@ defmodule FormExample.OrdersFixtures do
   def order_fixture(attrs \\ %{}) do
     {:ok, order} =
       attrs
-      |> Enum.into(%{
-
-      })
+      |> Enum.into(%{})
       |> FormExample.Orders.create_order()
 
     order
